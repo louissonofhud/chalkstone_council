@@ -42,3 +42,11 @@ def create_issue(response):
             "form": form,
         })
 
+def home(response):
+    return render(
+        response,
+        "main_ui/base.html",
+        {
+            "name": "Home",
+        })
+
