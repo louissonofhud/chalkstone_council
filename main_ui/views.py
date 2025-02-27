@@ -5,8 +5,20 @@ from .forms import LogIssue
 from .models import Issue
 # Create your views here.
 
-def index(response):
-    ls = Issue.objects.all()
+def list_issues(response):
+    issues = Issue.objects.all()
+    if response.method == "POST":
+        if response.POST.get("Create") == "goto":
+            return redirect(reverse("create_issue"))
+    return render(
+        response,
+        "main_ui/list_issues.html",
+        {
+            "issues": issues,
+        })
+
+
+def create_issue(response):
     if response.method == "POST":
         form = LogIssue(response.POST)
         if form.is_valid():
@@ -20,14 +32,13 @@ def index(response):
                 location_long=0,
                 )
             iss.save()
-            return redirect(reverse("base"))
+            return redirect(reverse("create_issue"))
     else:
         form = LogIssue()
     return render(
         response,
-        "main_ui/base.html",
+        "main_ui/create_issue.html",
         {
             "form": form,
-            "ls": ls[::-1]
         })
 

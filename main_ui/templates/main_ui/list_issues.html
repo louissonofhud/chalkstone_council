@@ -1,0 +1,28 @@
+{%extends "main_ui/base.html"%}
+
+{%block content%}
+<h1>List of Issues</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Description</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for issue in issues %}
+        <tr>
+            <td>{{ issue.issue_type }}</td>
+            <td>{{ issue.issue_desc }}</td>
+            <td>{{ issue.resolved }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<br><br>
+<form method="post">
+    {% csrf_token %} 
+    <button type="submit", name="Create", value="goto",class="btn btn-primary">Create Issue</button>
+</form>
+{% endblock %}

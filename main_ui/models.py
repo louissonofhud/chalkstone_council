@@ -9,6 +9,6 @@ class Issue(models.Model):
     # date_raised = DATE_FIELD
     # last_update = DATE_FIELD
     # img = LOOK_HOW_TO_STORE_IMAGES (OPTIONAL field)
-    resolved = models.BooleanField()
+    resolved = models.BooleanField(default=False)
     location_lat = models.FloatField()
     location_long = models.FloatField()
