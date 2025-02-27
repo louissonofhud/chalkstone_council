@@ -45,7 +45,7 @@ def create_issue(response):
 def home(response):
     return render(
         response,
-        "main_ui/base.html",
+        "main_ui/home.html",
         {
             "name": "Home",
         })
