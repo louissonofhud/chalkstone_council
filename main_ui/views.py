@@ -58,3 +58,11 @@ def logout(response):
             "name": "Logout",
         })
 
+def test(response):
+    return render(
+        response,
+        "main_ui/test.html",
+        {
+            "name": "Test",
+        })
+

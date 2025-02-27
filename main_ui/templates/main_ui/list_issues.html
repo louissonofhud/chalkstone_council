@@ -1,28 +1,110 @@
 {%extends "main_ui/base.html"%}
 
+{% block head %}
+
+<style >
+    .expandable-container {
+        border: 1px solid #ccc;
+        margin: 10px 0;
+        background-color: #f9f9f9;
+        width: 300px; /* Adjust width as needed */
+    }
+    
+    .expandable-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px;
+        cursor: pointer;
+        background-color: #f9f9f9;
+    }
+    
+    .details {
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 10px;
+        border-top: 1px solid #ccc;
+        background-color: #fff;
+        transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+    }
+    
+    .arrow {
+        font-size: 16px;
+        transition: transform 0.3s ease;
+    }
+    
+    .rotated {
+        transform: rotate(90deg);
+    }
+
+    .expandable-header:hover {
+        background-color: #e0e0e0;
+    }
+
+    .tr-btn {
+    position: fixed;
+    top: 100px; /* Adjust this value as needed */
+    right: 0; /* Fix it to the left of the screen */
+    padding: 5px;
+    background-color: #cae8ca;
+    border: 2px solid #4CAF50;
+}
+
+
+
+
+</style>
+
+{% endblock %}
+
+
+
 {%block content%}
+<button class="tr-btn" onclick="collapseAll()">Collapse All</button>
 <h1>List of Issues</h1>
-<table>
-    <thead>
-        <tr>
-            <th>Type</th>
-            <th>Description</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for issue in issues %}
-        <tr>
-            <td>{{ issue.issue_type }}</td>
-            <td>{{ issue.issue_desc }}</td>
-            <td>{{ issue.resolved }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+{% for issue in issues %}
+    <div class="expandable-container">
+        <div class="expandable-header" onclick="toggleDetails(this)">
+            <span><strong>{{ issue.issue_type }}</strong></span>
+            <span class="arrow">▶</span>
+        </div>
+        <div class="details">
+            <p>{{ issue.issue_desc }}</p>
+        </div>
+    </div>
+{% endfor %}
 <br><br>
+
 <form method="post">
     {% csrf_token %} 
     <button type="submit", name="Create", value="goto",class="btn btn-primary">Create Issue</button>
 </form>
+
+<script>
+    function toggleDetails(element) {
+        let details = element.nextElementSibling;
+        let arrow = element.querySelector('.arrow');
+
+        if (details.style.maxHeight) {
+            details.style.maxHeight = null; // Collapse
+        } else {
+            details.style.maxHeight = details.scrollHeight + "px"; // Expand dynamically
+        }
+    }
+</script>
+
+<script>
+    function collapseAll() {
+        let details = document.querySelectorAll('.details');
+        let arrows = document.querySelectorAll('.arrow');
+
+        details.forEach(detail => {
+            detail.classList.remove("expanded");
+        });
+
+        arrows.forEach(arrow => {
+            arrow.classList.remove("rotated");
+        });
+    }
+</script>
 {% endblock %}
