@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head></head>
+
+<body>
+    <h1>Chalkstone council</h1>
+    <form method="post" action="">
+        {%csrf_token%}
+        {{form.as_p}}
+        <button type="submit", name="save">Log issue</button>
+
+    </form>
+    
+    <br>
+    <br>
+    <h2>List of complaints</h2>
+    <ul>
+        {% for issue in ls %}
+            <li>{{issue.issue_type}}: {{issue.issue_desc}}</li>
+        {% endfor %}
+    </ul>
+
+
+</body>
+
+
+
+</html>
