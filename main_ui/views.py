@@ -50,3 +50,11 @@ def home(response):
             "name": "Home",
         })
 
+def logout(response):
+    return render(
+        response,
+        "main_ui/logout.html",
+        {
+            "name": "Logout",
+        })
+

@@ -32,6 +32,40 @@
             padding: 0px 10px;
         }
 
+        .logout_button {
+            background-color: #f44336;
+            color: white;
+            padding: 10px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 80%;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 5px;
+            transform: translateX(-50%);
+        }
+
+        .login_button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 80%;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 5px;
+            transform: translateX(-50%);
+        }
+
         </style>
         <title>Chalkstone council</title>
         <meta charset="utf-8">
@@ -42,10 +76,21 @@
     </head>
 
     <body>
-        <div class="sidenav">
-            <a href="/">Home</a>
-            <a href="/create">Report new issue</a>
-            <a href="/all_issues">See all issues</a>
+        {% if user.is_authenticated %}
+            <div class="sidenav">
+                <a href="/">Home</a>
+                <a href="/create">Report new issue</a>
+                <a href="/all_issues">See all issues</a>
+                <form method="POST" action="{%url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="logout_button">Logout</button>
+        {% else%}
+            <div class="sidenav">
+                <a href="/">Home</a>
+                <a href="/create">Report new issue</a>
+                <a href="/all_issues">See all issues</a>
+                <button class="login_button" onclick="window.location.href='/login'">Login</button>
+        {% endif %}
         </div>
 
         <div id="content", name="content" class="main">
